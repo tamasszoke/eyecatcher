@@ -39,6 +39,6 @@ Prints a block with your message:
 ## License
 
 <b>The MIT License (MIT)</b><br/>
-Copyright (c) 2017 Tamas Szoke
+Copyright (c) 2018 Tamas Szoke
 
 https://opensource.org/licenses/MIT
