@@ -109,22 +109,22 @@ function eyecatcher(text) {
 				for (let i = 0; i < textArray.length; i++) {
 
 					remainingLength = maxBigLength - (textArray[i].length + 5 + 3 + 6);
-					content += '\r\n' + ''.padStart(5) + colors['background'] + colors['text'] + '   ' + textArray[i] + ''.padEnd(remainingLength) + palette.effect['reset'];
+					content += '\r\n' + ''.padStart(2) + colors['background'] + colors['text'] + '   ' + textArray[i] + ''.padEnd(remainingLength) + palette.effect['reset'];
 				};
 
 			} else {
 
-				content = '\r\n' + ''.padStart(5) + colors['background'] + colors['text'] + '   ' + text + ''.padEnd(remainingLength) + palette.effect['reset'];
+				content = '\r\n' + ''.padStart(2) + colors['background'] + colors['text'] + '   ' + text + ''.padEnd(remainingLength) + palette.effect['reset'];
 			};
 
-			const emptyLine = '\r\n' + ''.padStart(5) + colors['background'].padEnd(74) + palette.effect['reset'];
-			const title = '\r\n' + ''.padStart(5) + colors['background'] + colors['text'] + '   ' + bigTitle + ''.padEnd(remainingTitleLength) + palette.effect['reset'];
+			const emptyLine = '\r\n' + ''.padStart(2) + colors['background'].padEnd(74) + palette.effect['reset'];
+			const title = '\r\n' + ''.padStart(2) + colors['background'] + colors['text'] + '   ' + bigTitle + ''.padEnd(remainingTitleLength) + palette.effect['reset'];
 
 			console.log(emptyLine, title, emptyLine, emptyLine, content, emptyLine, '\r\n');
 
 		} else {
 
-			console.log(colors['time'], time, colors['text'], text, colors['source'], source, palette.effect['reset']);
+			console.log(colors['time'] + time + colors['text'] + ''.padEnd(3) + text + ''.padEnd(3) + colors['source'] + source + palette.effect['reset']);
 		};
 
 		return 0;
@@ -152,10 +152,12 @@ function eyecatcher(text) {
 
 		const date = new Date();
 
-		const minutes = date.getMinutes().toString().length === 1 ? '0' + date.getMinutes() : date.getMinutes();
-		const hours = date.getHours().toString().length === 1 ? '0' + date.getHours() : date.getHours();
-		const ampm = date.getHours() >= 12 ? 'pm' : 'am';
-
+		let hours = date.getHours();
+		let minutes = date.getMinutes();
+		const ampm = hours >= 12 ? 'pm' : 'am';
+		
+		minutes = minutes.toString().length === 1 ? '0' + minutes : minutes;
+		hours = hours >= 12 ? hours - 12 : hours;
 		const time = hours + ':' + minutes + ' ' + ampm;
 
 		return time;
@@ -166,10 +168,7 @@ function eyecatcher(text) {
 		const trace = new Error().stack;
 		let source = trace.split('at')[2].split(' ');
 		
-		if (source[2]) source = source[2].match(/\(([^)]+)\)/)[1].toString();
-		else source = source[1].replace(/\s/g,'').toString();
-
-		source = source.replace(/^.*[\\\/]/, '');
+		source = source[0].replace(/^.*[\\\/]/, '').replace(/[{()}]/g, '').replace(/\n|\r/g, "");
 
 		return source;
 	};
@@ -182,32 +181,32 @@ function eyecatcher(text) {
 
 			colors = {
 				time: palette.font['white'],
-				text: palette.font['white'] + ' : ' + palette.font['white'],
-				source: palette.font['white'] + ' => ' + palette.font['white']
+				text: palette.font['white'] + ' < ' + palette.font['white'],
+				source: palette.font['white'] + ' > ' + palette.font['white']
 			};
 
 		} else if (type === 'info') {
 
 			colors = {
 				time: palette.font['blue'],
-				text: palette.font['white'] + ' : ' + palette.font['green'],
-				source: palette.font['white'] + ' => ' + palette.font['magenta']
+				text: palette.font['white'] + ' < ' + palette.font['green'],
+				source: palette.font['white'] + ' > ' + palette.font['magenta']
 			};
 
 		} else if (type === 'warn') {
 
 			colors = {
 				time: palette.font['blue'],
-				text: palette.font['white'] + ' : ' + palette.font['yellow'],
-				source: palette.font['white'] + ' => ' + palette.font['magenta']
+				text: palette.font['white'] + ' < ' + palette.font['yellow'],
+				source: palette.font['white'] + ' > ' + palette.font['magenta']
 			};
 
 		} else if (type === 'error') {
 
 			colors = {
 				time: palette.font['blue'],
-				text: palette.font['white'] + ' : ' + palette.font['red'],
-				source: palette.font['white'] + ' => ' + palette.font['magenta']
+				text: palette.font['white'] + ' < ' + palette.font['red'],
+				source: palette.font['white'] + ' > ' + palette.font['magenta']
 			};
 		
 		} else if (type === 'bigLog') {

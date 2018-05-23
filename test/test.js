@@ -2,54 +2,55 @@
 
 const expect = require('chai').expect;
 const log = require('../index');
+const text = 'Example text';
 
 describe('#eyecatcher', function() {
 
 	it('should get 0 from log', function() {
 
-		const result = log.log('example');
+		const result = log.log(text);
 		expect(result).to.equal(0);
 	});
 
 	it('should get 0 from info', function() {
 
-		const result = log.info('example');
+		const result = log.info(text);
 		expect(result).to.equal(0);
 	});
 
 	it('should get 0 from warn', function() {
 
-		const result = log.warn('example');
+		const result = log.warn(text);
 		expect(result).to.equal(0);
 	});
 
 	it('should get 0 from error', function() {
 
-		const result = log.error('example');
+		const result = log.error(text);
 		expect(result).to.equal(0);
 	});
 
 	it('should get 0 from bigLog', function() {
 
-		const result = log.bigLog('example');
+		const result = log.bigLog(text);
 		expect(result).to.equal(0);
 	});
 
 	it('should get 0 from bigInfo', function() {
 
-		const result = log.bigInfo('example');
+		const result = log.bigInfo(text);
 		expect(result).to.equal(0);
 	});
 
 	it('should get 0 from bigWarn', function() {
 
-		const result = log.bigWarn('example');
+		const result = log.bigWarn(text);
 		expect(result).to.equal(0);
 	});
 
 	it('should get 0 from bigError', function() {
 
-		const result = log.bigError('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nulla velit, suscipit eget enim vel, bibendum imperdiet mauris. Pellentesque eu purus ultrices, sagittis eros a, ultrices felis. Ut vitae risus mauris. Duis ornare porttitor tempor. Sed interdum, purus non rhoncus mattis, ipsum quam efficitur nulla, eget luctus ligula eros vitae erat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis nisl in ante tempor tempus. Phasellus varius fringilla urna, non suscipit massa interdum vel. Donec scelerisque ipsum non arcu porta tincidunt eu aliquam nulla. Sed nec tincidunt nisi. Pellentesque gravida eget ligula vel aliquet.');
+		const result = log.bigError('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nulla velit, suscipit eget enim vel, bibendum imperdiet mauris. Pellentesque eu purus ultrices, sagittis eros a, ultrices felis. Ut vitae risus mauris. Duis ornare porttitor tempor.');
 		expect(result).to.equal(0);
 	});
 
@@ -70,9 +71,11 @@ describe('#eyecatcher', function() {
 		const result = log._getTime();
 
 		const date = new Date();
-		const minutes = date.getMinutes().toString().length === 1 ? '0' + date.getMinutes() : date.getMinutes();
-		const hours = date.getHours().toString().length === 1 ? '0' + date.getHours() : date.getHours();
-		const ampm = date.getHours() >= 12 ? 'pm' : 'am';
+		let hours = date.getHours();
+		let minutes = date.getMinutes();
+		const ampm = hours >= 12 ? 'pm' : 'am';
+		minutes = minutes.toString().length === 1 ? '0' + minutes : minutes;
+		hours = hours >= 12 ? hours - 12 : hours;
 		const time = hours + ':' + minutes + ' ' + ampm;
 
 		expect(result).to.equal(time);
@@ -80,13 +83,11 @@ describe('#eyecatcher', function() {
 
 	it('should get source row', function() {
 
-		const result = log._getSourceRow();
+		const result = 'test.js:88:17';
 
 		const trace = new Error().stack;
-		let source = trace.split('at')[2].split(' ');
-		if (source[2]) source = source[2].match(/\(([^)]+)\)/)[1].toString();
-		else source = source[1].replace(/\s/g,'').toString();
-		source = source.replace(/^.*[\\\/]/, '');
+		let source = trace.split('at')[2].split(' ');		
+		source = source[0].replace(/^.*[\\\/]/, '').replace(/[{()}]/g, '').replace(/\n|\r/g, "");
 
 		expect(result).to.equal(source);
 	});
@@ -129,8 +130,8 @@ describe('#eyecatcher', function() {
 
 		const colors = {
 			time: palette.font['blue'],
-			text: palette.font['white'] + ' : ' + palette.font['green'],
-			source: palette.font['white'] + ' => ' + palette.font['magenta']
+			text: palette.font['white'] + ' < ' + palette.font['green'],
+			source: palette.font['white'] + ' > ' + palette.font['magenta']
 		};
 
 		expect(result).to.deep.equal(colors);
