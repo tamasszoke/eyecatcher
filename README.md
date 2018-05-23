@@ -30,7 +30,7 @@ Prints a block with your message:
 
 ## Examples
 
-[[https://github.com/tamasszoke/eyecatcher/blob/master/docs/eyecatcher.png|alt=eyecatcher]]
+![Image of Yaktocat](https://github.com/tamasszoke/eyecatcher/blob/master/docs/eyecatcher.png?raw=true)
 
 ## Tests
 
