@@ -130,8 +130,8 @@ describe('#eyecatcher', function() {
 
 		const colors = {
 			time: palette.font['blue'],
-			text: palette.font['white'] + ' < ' + palette.font['green'],
-			source: palette.font['white'] + ' > ' + palette.font['magenta']
+			text: palette.font['white'] + '<' + palette.font['green'],
+			source: palette.font['white'] + '>' + palette.font['magenta']
 		};
 
 		expect(result).to.deep.equal(colors);

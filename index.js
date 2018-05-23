@@ -5,7 +5,7 @@
  * @param {string} text
  * @return {bool}
  */
-module.exports = new eyecatcher();
+module.exports = eyecatcher();
 
 function eyecatcher(text) {
 
@@ -124,7 +124,7 @@ function eyecatcher(text) {
 
 		} else {
 
-			console.log(colors['time'] + time + colors['text'] + ''.padEnd(3) + text + ''.padEnd(3) + colors['source'] + source + palette.effect['reset']);
+			console.log(colors['time'], time, colors['text'], '', text, '', colors['source'], source, palette.effect['reset']);
 		};
 
 		return 0;
@@ -164,11 +164,12 @@ function eyecatcher(text) {
 	};
 
 	const getSourceRow = function() {
-
-		const trace = new Error().stack;
-		let source = trace.split('at')[2].split(' ');
 		
-		source = source[0].replace(/^.*[\\\/]/, '').replace(/[{()}]/g, '').replace(/\n|\r/g, "");
+		const trace = new Error().stack;
+		const regexp = /\Context.<anonymous>(.*)\n/g;
+		let source = regexp.exec(trace)[1];
+		
+		source = source.replace(/^.*[\\\/]/, '').replace(/[{()}]/g, '').replace(/\n|\r/g, "");
 
 		return source;
 	};
@@ -181,32 +182,32 @@ function eyecatcher(text) {
 
 			colors = {
 				time: palette.font['white'],
-				text: palette.font['white'] + ' < ' + palette.font['white'],
-				source: palette.font['white'] + ' > ' + palette.font['white']
+				text: palette.font['white'] + '<' + palette.font['white'],
+				source: palette.font['white'] + '>' + palette.font['white']
 			};
 
 		} else if (type === 'info') {
 
 			colors = {
 				time: palette.font['blue'],
-				text: palette.font['white'] + ' < ' + palette.font['green'],
-				source: palette.font['white'] + ' > ' + palette.font['magenta']
+				text: palette.font['white'] + '<' + palette.font['green'],
+				source: palette.font['white'] + '>' + palette.font['magenta']
 			};
 
 		} else if (type === 'warn') {
 
 			colors = {
 				time: palette.font['blue'],
-				text: palette.font['white'] + ' < ' + palette.font['yellow'],
-				source: palette.font['white'] + ' > ' + palette.font['magenta']
+				text: palette.font['white'] + '<' + palette.font['yellow'],
+				source: palette.font['white'] + '>' + palette.font['magenta']
 			};
 
 		} else if (type === 'error') {
 
 			colors = {
 				time: palette.font['blue'],
-				text: palette.font['white'] + ' < ' + palette.font['red'],
-				source: palette.font['white'] + ' > ' + palette.font['magenta']
+				text: palette.font['white'] + '<' + palette.font['red'],
+				source: palette.font['white'] + '>' + palette.font['magenta']
 			};
 		
 		} else if (type === 'bigLog') {
