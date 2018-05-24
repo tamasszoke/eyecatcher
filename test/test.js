@@ -30,27 +30,27 @@ describe('#eyecatcher', function() {
 		expect(result).to.equal(0);
 	});
 
-	it('should get 0 from bigLog', function() {
+	it('should get 0 from logBlock', function() {
 
-		const result = log.bigLog(text);
+		const result = log.logBlock(text);
 		expect(result).to.equal(0);
 	});
 
-	it('should get 0 from bigInfo', function() {
+	it('should get 0 from infoBlock', function() {
 
-		const result = log.bigInfo(text);
+		const result = log.infoBlock(text);
 		expect(result).to.equal(0);
 	});
 
-	it('should get 0 from bigWarn', function() {
+	it('should get 0 from warnBlock', function() {
 
-		const result = log.bigWarn(text);
+		const result = log.warnBlock(text);
 		expect(result).to.equal(0);
 	});
 
-	it('should get 0 from bigError', function() {
+	it('should get 0 from errorBlock', function() {
 
-		const result = log.bigError('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nulla velit, suscipit eget enim vel, bibendum imperdiet mauris. Pellentesque eu purus ultrices, sagittis eros a, ultrices felis. Ut vitae risus mauris. Duis ornare porttitor tempor.');
+		const result = log.errorBlock('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nulla velit, suscipit eget enim vel, bibendum imperdiet mauris. Pellentesque eu purus ultrices, sagittis eros a, ultrices felis. Ut vitae risus mauris. Duis ornare porttitor tempor.');
 		expect(result).to.equal(0);
 	});
 

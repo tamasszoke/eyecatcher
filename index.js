@@ -65,24 +65,24 @@ function eyecatcher(text) {
 		return writeOut('error', text);
 	};
 
-	const bigLog = function(text) {
+	const logBlock = function(text) {
 
-		return writeOut('bigLog', text);
+		return writeOut('logBlock', text);
 	};
 
-	const bigInfo = function(text) {
+	const infoBlock = function(text) {
 
-		return writeOut('bigInfo', text);
+		return writeOut('infoBlock', text);
 	};
 
-	const bigWarn = function(text) {
+	const warnBlock = function(text) {
 
-		return writeOut('bigWarn', text);
+		return writeOut('warnBlock', text);
 	};
 
-	const bigError = function(text) {
+	const errorBlock = function(text) {
 
-		return writeOut('bigError', text);
+		return writeOut('errorBlock', text);
 	};
 
 	// private(ish) methods
@@ -95,10 +95,12 @@ function eyecatcher(text) {
 		const source = getSourceRow();
 		const colors = getColors(type);
 
-		if (type === 'bigLog' || type === 'bigInfo' || type === 'bigWarn' || type === 'bigError') {
+		if (type === 'logBlock' || type === 'infoBlock' || type === 'warnBlock' || type === 'errorBlock') {
 
 			let content = '';
-			const bigTitle = type.substr(3);
+			let bigTitle = type.substr(0, type.length - 5);
+			bigTitle = bigTitle.charAt(0).toUpperCase() + bigTitle.slice(1);
+
 			const remainingTitleLength = maxBigLength - (bigTitle.length + 5 + 3 + 6);
 			let remainingLength = maxBigLength - (text.length + 5 + 3 + 6);
 
@@ -120,7 +122,7 @@ function eyecatcher(text) {
 			const emptyLine = '\r\n' + ''.padStart(2) + colors['background'].padEnd(74) + palette.effect['reset'];
 			const title = '\r\n' + ''.padStart(2) + colors['background'] + colors['text'] + '   ' + bigTitle + ''.padEnd(remainingTitleLength) + palette.effect['reset'];
 
-			console.log(emptyLine, title, emptyLine, emptyLine, content, emptyLine, '\r\n');
+			console.log(emptyLine, title, emptyLine, emptyLine, content, emptyLine, '\r\n\r\n', colors['time'], time, colors['source'], source, palette.effect['reset'], '\r\n');
 
 		} else {
 
@@ -210,32 +212,40 @@ function eyecatcher(text) {
 				source: palette.font['white'] + '>' + palette.font['magenta']
 			};
 		
-		} else if (type === 'bigLog') {
+		} else if (type === 'logBlock') {
 
 			colors = {
 				background: palette.background['white'],
-				text: palette.font['black']
+				text: palette.font['black'],
+				time: palette.font['white'],
+				source: palette.font['white'] + '>' + palette.font['white']
 			};
 		
-		} else if (type === 'bigInfo') {
+		} else if (type === 'infoBlock') {
 
 			colors = {
 				background: palette.background['cyan'],
-				text: palette.font['black']
+				text: palette.font['black'],
+				time: palette.font['blue'],
+				source: palette.font['white'] + '>' + palette.font['magenta']
 			};
 		
-		} else if (type === 'bigWarn') {
+		} else if (type === 'warnBlock') {
 
 			colors = {
 				background: palette.background['yellow'],
-				text: palette.font['black']
+				text: palette.font['black'],
+				time: palette.font['blue'],
+				source: palette.font['white'] + '>' + palette.font['magenta']
 			};
 
-		} else if (type === 'bigError') {
+		} else if (type === 'errorBlock') {
 
 			colors = {
 				background: palette.background['red'],
-				text: palette.font['white']
+				text: palette.font['white'],
+				time: palette.font['blue'],
+				source: palette.font['white'] + '>' + palette.font['magenta']
 			};
 		};
 
@@ -253,10 +263,10 @@ function eyecatcher(text) {
 		info: info,
 		warn: warn,
 		error: error,
-		bigLog: bigLog,
-		bigInfo: bigInfo,
-		bigWarn: bigWarn,
-		bigError: bigError,
+		logBlock: logBlock,
+		infoBlock: infoBlock,
+		warnBlock: warnBlock,
+		errorBlock: errorBlock,
 		_writeOut: writeOut,
 		_getTime: getTime,
 		_getSourceRow: getSourceRow,
