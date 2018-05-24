@@ -1,7 +1,9 @@
 EyeCatcher
 =========
 
-[![Build Status](https://travis-ci.org/tamasszoke/eyecatcher.svg?branch=master)](https://travis-ci.org/tamasszoke/eyecatcher) [![Coverage Status](https://coveralls.io/repos/github/tamasszoke/eyecatcher/badge.svg?branch=master)](https://coveralls.io/github/tamasszoke/eyecatcher?branch=master) [![npm version](https://badge.fury.io/js/eyecatcher.svg)](https://badge.fury.io/js/eyecatcher) ![npm](https://img.shields.io/npm/l/express.svg)
+[![Build Status](https://travis-ci.org/tamasszoke/eyecatcher.svg?branch=master)](https://travis-ci.org/tamasszoke/eyecatcher) [![Coverage Status](https://coveralls.io/repos/github/tamasszoke/eyecatcher/badge.svg?branch=master)](https://coveralls.io/github/tamasszoke/eyecatcher?branch=master) [![npm version](https://badge.fury.io/js/eyecatcher.svg)](https://badge.fury.io/js/eyecatcher)
+
+[![NPM](https://nodei.co/npm/eyecatcher.png?compact=true)](https://nodei.co/npm/eyecatcher/)
 
 
 A tiny library that creates beautiful logging.
@@ -30,7 +32,7 @@ Prints a block with your message:
 
 ## Examples
 
-![Image of Yaktocat](https://github.com/tamasszoke/eyecatcher/blob/master/docs/eyecatcher.png?raw=true)
+![EyeCatcher](https://github.com/tamasszoke/eyecatcher/blob/master/docs/eyecatcher.png?raw=true)
 
 ## Tests
 
