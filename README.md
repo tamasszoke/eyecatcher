@@ -25,10 +25,10 @@ Prints your message, time and position in the code:
 
 Prints a block with your message:
 
-    eyecatcher.bigLog('Hello Big World!');
-    eyecatcher.bigInfo('Hello Big Info!');
-    eyecatcher.bigWarn('Hello Big Warn!');
-    eyecatcher.bigError('Hello Big Error!');
+    eyecatcher.logBlock('Hello Big World!');
+    eyecatcher.infoBlock('Hello Big Info!');
+    eyecatcher.warnBlock('Hello Big Warn!');
+    eyecatcher.errorBlock('Hello Big Error!');
 
 ## Examples
 

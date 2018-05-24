@@ -122,7 +122,7 @@ function eyecatcher(text) {
 			const emptyLine = '\r\n' + ''.padStart(2) + colors['background'].padEnd(74) + palette.effect['reset'];
 			const title = '\r\n' + ''.padStart(2) + colors['background'] + colors['text'] + '   ' + bigTitle + ''.padEnd(remainingTitleLength) + palette.effect['reset'];
 
-			console.log(emptyLine, title, emptyLine, emptyLine, content, emptyLine, '\r\n\r\n', colors['time'], time, colors['source'], source, palette.effect['reset'], '\r\n');
+			console.log(emptyLine, title, emptyLine, emptyLine, content, emptyLine, '\r\n', colors['time'], time, colors['source'], source, palette.effect['reset'], '\r\n');
 
 		} else {
 
@@ -159,7 +159,7 @@ function eyecatcher(text) {
 		const ampm = hours >= 12 ? 'pm' : 'am';
 		
 		minutes = minutes.toString().length === 1 ? '0' + minutes : minutes;
-		hours = hours >= 12 ? hours - 12 : hours;
+		hours = hours > 12 ? hours - 12 : hours;
 		const time = hours + ':' + minutes + ' ' + ampm;
 
 		return time;
