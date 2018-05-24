@@ -268,7 +268,7 @@ function eyecatcher(text) {
 
 	const splitContent = function(text, colors, whiteSpace, remainingContentLength) {
 
-		let content;
+		let content = ''; // otherwise undefined
 		const textArray = splitString(text, maxBigLength - whiteSpace - 3);
 				
 		for (let i = 0; i < textArray.length; i++) {
