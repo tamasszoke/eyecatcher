@@ -75,7 +75,7 @@ describe('#eyecatcher', function() {
 		let minutes = date.getMinutes();
 		const ampm = hours >= 12 ? 'pm' : 'am';
 		minutes = minutes.toString().length === 1 ? '0' + minutes : minutes;
-		hours = hours >= 12 ? hours - 12 : hours;
+		hours = hours > 12 ? hours - 12 : hours;
 		const time = hours + ':' + minutes + ' ' + ampm;
 
 		expect(result).to.equal(time);

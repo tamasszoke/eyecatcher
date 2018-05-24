@@ -122,7 +122,7 @@ function eyecatcher(text) {
 			const emptyLine = '\r\n' + ''.padStart(2) + colors['background'].padEnd(74) + palette.effect['reset'];
 			const title = '\r\n' + ''.padStart(2) + colors['background'] + colors['text'] + '   ' + bigTitle + ''.padEnd(remainingTitleLength) + palette.effect['reset'];
 
-			console.log(emptyLine, title, emptyLine, emptyLine, content, emptyLine, '\r\n', colors['time'], time, colors['source'], source, palette.effect['reset'], '\r\n');
+			console.log(emptyLine, title, emptyLine, emptyLine, content, emptyLine, '\r\n\r\n', /*''.padStart(maxBigLength-time.length-source.length-5-3-6-1), */colors['time'], time, colors['source'], source, palette.effect['reset'], '\r\n');
 
 		} else {
 
