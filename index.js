@@ -11,38 +11,6 @@ function eyecatcher(text) {
 
 	const maxBigLength = 80;
 
-	const palette = {
-		effect: {
-			reset: "\x1b[0m",
-			bright: "\x1b[1m",
-			dim: "\x1b[2m",
-			underscore: "\x1b[4m",
-			blink: "\x1b[5m",
-			reverse: "\x1b[7m",
-			hidden: "\x1b[8m"
-		},
-		font: {
-			black: "\x1b[30m",
-			red: "\x1b[31m",
-			green: "\x1b[32m",
-			yellow: "\x1b[33m",
-			blue: "\x1b[34m",
-			magenta: "\x1b[35m",
-			cyan: "\x1b[36m",
-			white: "\x1b[37m"
-		},
-		background: {
-			black: "\x1b[40m",
-			red: "\x1b[41m",
-			green: "\x1b[42m",
-			yellow: "\x1b[43m",
-			blue: "\x1b[44m",
-			magenta: "\x1b[45m",
-			cyan: "\x1b[46m",
-			white: "\x1b[47m"
-		}
-	};
-
 	// public methods
 
 	const log = function(text) {
@@ -97,36 +65,13 @@ function eyecatcher(text) {
 
 		if (type === 'logBlock' || type === 'infoBlock' || type === 'warnBlock' || type === 'errorBlock') {
 
-			let content = '';
-			let bigTitle = type.substr(0, type.length - 5);
-			bigTitle = bigTitle.charAt(0).toUpperCase() + bigTitle.slice(1);
-
-			const remainingTitleLength = maxBigLength - (bigTitle.length + 5 + 3 + 6);
-			let remainingLength = maxBigLength - (text.length + 5 + 3 + 6);
-
-			if (remainingLength <= 3) {
-
-				const textArray = splitString(text, maxBigLength - 5 - 3 - 6 - 3);
-				
-				for (let i = 0; i < textArray.length; i++) {
-
-					remainingLength = maxBigLength - (textArray[i].length + 5 + 3 + 6);
-					content += '\r\n' + ''.padStart(2) + colors['background'] + colors['text'] + '   ' + textArray[i] + ''.padEnd(remainingLength) + palette.effect['reset'];
-				};
-
-			} else {
-
-				content = '\r\n' + ''.padStart(2) + colors['background'] + colors['text'] + '   ' + text + ''.padEnd(remainingLength) + palette.effect['reset'];
-			};
-
-			const emptyLine = '\r\n' + ''.padStart(2) + colors['background'].padEnd(74) + palette.effect['reset'];
-			const title = '\r\n' + ''.padStart(2) + colors['background'] + colors['text'] + '   ' + bigTitle + ''.padEnd(remainingTitleLength) + palette.effect['reset'];
-
-			console.log(emptyLine, title, emptyLine, emptyLine, content, emptyLine, '\r\n\r\n', /*''.padStart(maxBigLength-time.length-source.length-5-3-6-1), */colors['time'], time, colors['source'], source, palette.effect['reset'], '\r\n');
+			const block = getBlock(text, type, colors);
+			
+			console.log(block.emptyLine, block.title, block.emptyLine, block.emptyLine, block.content, block.emptyLine, '\r\n\r\n', colors['time'], time, colors['source'], source, colors['reset'], '\r\n');
 
 		} else {
 
-			console.log(colors['time'], time, colors['text'], '', text, '', colors['source'], source, palette.effect['reset']);
+			console.log(colors['time'], time, colors['text'], '', text, '', colors['source'], source, colors['reset']);
 		};
 
 		return 0;
@@ -179,6 +124,38 @@ function eyecatcher(text) {
 	const getColors = function(type) {
 
 		let colors = {};
+
+		const palette = {
+			effect: {
+				reset: "\x1b[0m",
+				bright: "\x1b[1m",
+				dim: "\x1b[2m",
+				underscore: "\x1b[4m",
+				blink: "\x1b[5m",
+				reverse: "\x1b[7m",
+				hidden: "\x1b[8m"
+			},
+			font: {
+				black: "\x1b[30m",
+				red: "\x1b[31m",
+				green: "\x1b[32m",
+				yellow: "\x1b[33m",
+				blue: "\x1b[34m",
+				magenta: "\x1b[35m",
+				cyan: "\x1b[36m",
+				white: "\x1b[37m"
+			},
+			background: {
+				black: "\x1b[40m",
+				red: "\x1b[41m",
+				green: "\x1b[42m",
+				yellow: "\x1b[43m",
+				blue: "\x1b[44m",
+				magenta: "\x1b[45m",
+				cyan: "\x1b[46m",
+				white: "\x1b[47m"
+			}
+		};
 
 		if (type === 'log') {
 
@@ -249,6 +226,8 @@ function eyecatcher(text) {
 			};
 		};
 
+		colors.reset = palette.effect['reset'];
+
 		return colors;
 	};
 
@@ -256,6 +235,49 @@ function eyecatcher(text) {
 	
 		const re = new RegExp('.{1,' + size + '}', 'g');
 		return string.match(re);
+	};
+
+	const getBlock = function(text, type, colors) {
+
+		let content;
+		let titleText = type.substr(0, type.length - 5);
+		titleText = titleText.charAt(0).toUpperCase() + titleText.slice(1);
+
+		const whiteSpace = 5 + 3 + 6;
+		const remainingTitleLength = maxBigLength - (titleText.length + whiteSpace);
+		let remainingContentLength = maxBigLength - (text.length + whiteSpace);
+
+		const emptyLine = '\r\n' + ''.padStart(2) + colors['background'].padEnd(74) + colors['reset'];
+		const title = '\r\n' + ''.padStart(2) + colors['background'] + colors['text'] + '   ' + titleText + ''.padEnd(remainingTitleLength) + colors['reset'];
+
+		if (remainingContentLength <= 3) {
+
+			content = splitContent(text, colors, whiteSpace, remainingContentLength);
+
+		} else {
+
+			content = '\r\n' + ''.padStart(2) + colors['background'] + colors['text'] + '   ' + text + ''.padEnd(remainingContentLength) + colors['reset'];
+		};
+
+		return {
+			title: title,
+			content: content,
+			emptyLine: emptyLine
+		};
+	};
+
+	const splitContent = function(text, colors, whiteSpace, remainingContentLength) {
+
+		let content;
+		const textArray = splitString(text, maxBigLength - whiteSpace - 3);
+				
+		for (let i = 0; i < textArray.length; i++) {
+
+			remainingContentLength = maxBigLength - (textArray[i].length + whiteSpace);
+			content += '\r\n' + ''.padStart(2) + colors['background'] + colors['text'] + '   ' + textArray[i] + ''.padEnd(remainingContentLength) + colors['reset'];
+		};
+
+		return content;
 	};
 
 	return {
@@ -271,6 +293,8 @@ function eyecatcher(text) {
 		_getTime: getTime,
 		_getSourceRow: getSourceRow,
 		_validateString: validateString,
-		_getColors: getColors
+		_getColors: getColors,
+		_getBlock: getBlock,
+		_splitContent: splitContent
 	};
 };
