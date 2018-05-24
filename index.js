@@ -9,7 +9,7 @@ module.exports = eyecatcher();
 
 function eyecatcher(text) {
 
-	const maxBigLength = 80;
+	const maxBlockLength = 80;
 
 	// public methods
 
@@ -244,8 +244,8 @@ function eyecatcher(text) {
 		titleText = titleText.charAt(0).toUpperCase() + titleText.slice(1);
 
 		const whiteSpace = 5 + 3 + 6;
-		const remainingTitleLength = maxBigLength - (titleText.length + whiteSpace);
-		let remainingContentLength = maxBigLength - (text.length + whiteSpace);
+		const remainingTitleLength = maxBlockLength - (titleText.length + whiteSpace);
+		let remainingContentLength = maxBlockLength - (text.length + whiteSpace);
 
 		const emptyLine = '\r\n' + ''.padStart(2) + colors['background'].padEnd(74) + colors['reset'];
 		const title = '\r\n' + ''.padStart(2) + colors['background'] + colors['text'] + '   ' + titleText + ''.padEnd(remainingTitleLength) + colors['reset'];
@@ -269,11 +269,11 @@ function eyecatcher(text) {
 	const splitContent = function(text, colors, whiteSpace, remainingContentLength) {
 
 		let content = ''; // otherwise undefined
-		const textArray = splitString(text, maxBigLength - whiteSpace - 3);
+		const textArray = splitString(text, maxBlockLength - whiteSpace - 3);
 				
 		for (let i = 0; i < textArray.length; i++) {
 
-			remainingContentLength = maxBigLength - (textArray[i].length + whiteSpace);
+			remainingContentLength = maxBlockLength - (textArray[i].length + whiteSpace);
 			content += '\r\n' + ''.padStart(2) + colors['background'] + colors['text'] + '   ' + textArray[i] + ''.padEnd(remainingContentLength) + colors['reset'];
 		};
 
