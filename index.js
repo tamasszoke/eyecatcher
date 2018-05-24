@@ -166,9 +166,9 @@ function eyecatcher(text) {
 	const getSourceRow = function() {
 		
 		const trace = new Error().stack;
-		const regexp = /\Context.<anonymous>(.*)\n/g;
+		const regexp = /\.<anonymous>(.*)\n/g;
+
 		let source = regexp.exec(trace)[1];
-		
 		source = source.replace(/^.*[\\\/]/, '').replace(/[{()}]/g, '').replace(/\n|\r/g, "");
 
 		return source;
