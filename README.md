@@ -3,8 +3,6 @@ EyeCatcher
 
 [![Build Status](https://travis-ci.org/tamasszoke/eyecatcher.svg?branch=master)](https://travis-ci.org/tamasszoke/eyecatcher) [![Coverage Status](https://coveralls.io/repos/github/tamasszoke/eyecatcher/badge.svg?branch=master)](https://coveralls.io/github/tamasszoke/eyecatcher?branch=master) [![npm version](https://badge.fury.io/js/eyecatcher.svg)](https://badge.fury.io/js/eyecatcher)
 
-[![NPM](https://nodei.co/npm/eyecatcher.png?compact=true)](https://nodei.co/npm/eyecatcher/)
-
 A tiny library that creates beautiful logging.
 
 ## Installation
