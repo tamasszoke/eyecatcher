@@ -7,92 +7,98 @@
  */
 module.exports = eyecatcher();
 
-function eyecatcher(text) {
+function eyecatcher() {
 
+	let text;
 	const maxBlockLength = 80;
 
 	// public methods
 
-	const log = function(text) {
+	const log = function() {
 
-		return writeOut('log', text);
+		return writeOut('log', arguments);
 	};
 
 	const info = function(text) {
 
-		return writeOut('info', text);
+		return writeOut('info', arguments);
 	};
 
 	const warn = function(text) {
 
-		return writeOut('warn', text);
+		return writeOut('warn', arguments);
 	};
 
 	const error = function(text) {
 
-		return writeOut('error', text);
+		return writeOut('error', arguments);
 	};
 
 	const logBlock = function(text) {
 
-		return writeOut('logBlock', text);
+		return writeOut('logBlock', arguments);
 	};
 
 	const infoBlock = function(text) {
 
-		return writeOut('infoBlock', text);
+		return writeOut('infoBlock', arguments);
 	};
 
 	const warnBlock = function(text) {
 
-		return writeOut('warnBlock', text);
+		return writeOut('warnBlock', arguments);
 	};
 
 	const errorBlock = function(text) {
 
-		return writeOut('errorBlock', text);
+		return writeOut('errorBlock', arguments);
 	};
 
 	// private(ish) methods
 
-	const writeOut = function(type, text) {
+	const writeOut = function(type, value) {
 
-		validateString(text);
-		
-		const time = getTime();
-		const source = getSourceRow();
+		const text = validateString(value);
 		const colors = getColors(type);
+		let time = getTime();
+		let source = getSourceRow();
 
 		if (type === 'logBlock' || type === 'infoBlock' || type === 'warnBlock' || type === 'errorBlock') {
 
 			const block = getBlock(text, type, colors);
-			
-			console.log(block.emptyLine, block.title, block.emptyLine, block.emptyLine, block.content, block.emptyLine, '\r\n\r\n', colors['time'], time, colors['source'], source, colors['reset'], '\r\n');
+			time = '\r\n\r\n' + ''.padStart(2) + colors['time'] + time;
+			source = colors['source'] + source + colors['reset'] + '\r\n';
+			console.log(block.emptyLine, block.title, block.emptyLine, block.emptyLine, block.content, block.emptyLine, time, source);
 
 		} else {
 
-			console.log(colors['time'], time, colors['text'], '', text, '', colors['source'], source, colors['reset']);
+			time = colors['time'] + time;
+			source = colors['source'] + source + colors['reset'];
+			console.log(time, colors['text'], '', text, '', source);
 		};
 
 		return 0;
 	};
 
-	const validateString = function(text) {
+	const validateString = function(value) {
 
-		if (text.length === 0) {
-        
-        	console.log('String, Please!');
-        	return 1;
-    	
-    	} else if (typeof text === 'function') {
+		let text = '';
 
-        	console.log('¯\\_(ツ)_/¯');
-    		return 1;
+		for (let i = 0; i < value.length; i++) {
 
-    	} else {
+			if (i > 0) text += ' ';
 
-    		return 0;
-    	};
+			if (typeof value[i] === 'string' || value[i] instanceof String) {
+
+				text += value[i];
+			
+			} else {
+
+				text += JSON.stringify(value[i]);
+			};
+		};
+
+		return text;
 	};
 
 	const getTime = function() {
@@ -118,7 +124,7 @@ function eyecatcher(text) {
 		let source = regexp.exec(trace)[1];
 		source = source.replace(/^.*[\\\/]/, '').replace(/[{()}]/g, '').replace(/\n|\r/g, "");
 
-		return source;
+		return ' ' + source;
 	};
 
 	const getColors = function(type) {

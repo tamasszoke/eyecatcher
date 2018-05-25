@@ -92,10 +92,10 @@ describe('#eyecatcher', function() {
 		expect(result).to.equal(0);
 	});
 
-	it('should get 0 from string validation', function() {
+	it('should return string from _validateString', function() {
 
 		const result = log._validateString('example');
-		expect(result).to.equal(0);
+		expect(result).to.be.a('string');
 	});
 
 	it('should get current time', function() {
@@ -138,21 +138,6 @@ describe('#eyecatcher', function() {
 		expect(result).to.deep.equal(colors);
 	});
 
-	it('should return string from _splitContent', function() {
-
-		const colors = {
-			background: palette.background['white'],
-			text: palette.font['black'],
-			time: palette.font['white'],
-			source: palette.font['white'] + '>' + palette.font['white'],
-			reset: palette.effect['reset']
-		};
-
-		const result = log._splitContent('text', colors, 5, 5);
-
-		expect(result).to.be.a('string');
-	});
-
 	it('should return object from _getBlock', function() {
 
 		const colors = {
@@ -166,5 +151,20 @@ describe('#eyecatcher', function() {
 		const result = log._getBlock('text', 'log', colors);
 
 		expect(result).to.be.an('object');
+	});
+
+	it('should return string from _splitContent', function() {
+
+		const colors = {
+			background: palette.background['white'],
+			text: palette.font['black'],
+			time: palette.font['white'],
+			source: palette.font['white'] + '>' + palette.font['white'],
+			reset: palette.effect['reset']
+		};
+
+		const result = log._splitContent('text', colors, 5, 5);
+
+		expect(result).to.be.a('string');
 	});
 });
