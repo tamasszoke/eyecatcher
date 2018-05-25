@@ -15,17 +15,19 @@ A tiny library that creates beautiful logging.
 
 Prints your message, time and position in the code:
 
-    eyecatcher.log('Hello World!');
-    eyecatcher.info('Hello Info!');
-    eyecatcher.warn('Hello Warn!');
-    eyecatcher.error('Hello Error!');
+    eyecatcher.log('Log', 'example');
+    eyecatcher.info('Info', 'example');
+    eyecatcher.warn('Warning example');
+    eyecatcher.error('Error example');
 
 Prints a block with your message:
 
-    eyecatcher.logBlock('Hello Big World!');
-    eyecatcher.infoBlock('Hello Big Info!');
-    eyecatcher.warnBlock('Hello Big Warn!');
-    eyecatcher.errorBlock('Hello Big Error!');
+    eyecatcher.logBlock('Log block example');
+    eyecatcher.infoBlock('Info block example. Array:', yourArray);
+    eyecatcher.warnBlock('Warning block example. JSON:', yourJson);
+    eyecatcher.errorBlock('Error block example.');
+
+You can use an array or an object.
 
 ## Examples
 
