@@ -86,13 +86,13 @@ describe('#eyecatcher', function() {
 		expect(result).to.equal(0);
 	});
 
-	it('should get 0 from _writeOut', function() {
+	it('should get 0 from writeOut', function() {
 
 		const result = log._writeOut('info', 'example');
 		expect(result).to.equal(0);
 	});
 
-	it('should return string from _validateString', function() {
+	it('should return string from validateString', function() {
 
 		const result = log._validateString('example');
 		expect(result).to.be.a('string');
@@ -124,21 +124,13 @@ describe('#eyecatcher', function() {
 		expect(source).to.include(result);
 	});
 
-	it('should get colors', function() {
+	it('should get colors object', function() {
 
 		const result = log._getColors('info');
-
-		const colors = {
-			time: palette.font['blue'],
-			text: palette.font['white'] + '<' + palette.font['green'],
-			source: palette.font['white'] + '>' + palette.font['magenta'],
-			reset: palette.effect['reset']
-		};
-
-		expect(result).to.deep.equal(colors);
+		expect(result).to.be.an('object');
 	});
 
-	it('should return object from _getBlock', function() {
+	it('should return object from getBlock', function() {
 
 		const colors = {
 			background: palette.background['white'],
@@ -153,7 +145,7 @@ describe('#eyecatcher', function() {
 		expect(result).to.be.an('object');
 	});
 
-	it('should return string from _splitContent', function() {
+	it('should return string from splitContent', function() {
 
 		const colors = {
 			background: palette.background['white'],
@@ -166,5 +158,17 @@ describe('#eyecatcher', function() {
 		const result = log._splitContent('text', colors, 5, 5);
 
 		expect(result).to.be.a('string');
+	});
+
+	it('should return bool from isArray', function() {
+
+		let result = log._isArray('text');
+		expect(result).to.equal(false);
+	});
+
+	it('should return bool from isObject', function() {
+
+		let result = log._isObject('text');
+		expect(result).to.equal(false);
 	});
 });

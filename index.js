@@ -84,17 +84,24 @@ function eyecatcher() {
 
 		let text = '';
 
-		for (let i = 0; i < value.length; i++) {
+		if (!isArray(value) && !isObject(value)) {
 
-			if (i > 0) text += ' ';
+			text = value;
 
-			if (typeof value[i] === 'string' || value[i] instanceof String) {
+		} else {
 
-				text += value[i];
-			
-			} else {
+			for (let i = 0; i < value.length; i++) {
 
-				text += JSON.stringify(value[i]);
+				if (i > 0) text += ' ';
+
+				if (typeof value[i] === 'string' || value[i] instanceof String) {
+
+					text += value[i];
+				
+				} else {
+
+					text += JSON.stringify(value[i]);
+				};
 			};
 		};
 
@@ -247,6 +254,8 @@ function eyecatcher() {
 
 		let content;
 		let titleText = type.substr(0, type.length - 5);
+		if (type === 'warnBlock') titleText = 'warning!';
+		if (type === 'errorBlock') titleText += '!';
 		titleText = titleText.charAt(0).toUpperCase() + titleText.slice(1);
 
 		const whiteSpace = 5 + 3 + 6;
@@ -286,6 +295,16 @@ function eyecatcher() {
 		return content;
 	};
 
+	const isArray = function(a) {
+
+		return (!!a) && (a.constructor === Array);
+	};
+
+	const isObject = function(a) {
+
+		return (!!a) && (a.constructor === Object);
+	};
+
 	return {
 		log: log,
 		info: info,
@@ -301,6 +320,8 @@ function eyecatcher() {
 		_validateString: validateString,
 		_getColors: getColors,
 		_getBlock: getBlock,
-		_splitContent: splitContent
+		_splitContent: splitContent,
+		_isArray: isArray,
+		_isObject: isObject
 	};
 };
