@@ -127,9 +127,33 @@ function eyecatcher() {
 		
 		const trace = new Error().stack;
 		const regexp = /\.<anonymous>(.*)\n/g;
+		const regexpModule = /\module.exports(.*)\n/g;
+		let source;
+		
+		try {
 
-		let source = regexp.exec(trace)[1];
-		source = source.replace(/^.*[\\\/]/, '').replace(/[{()}]/g, '').replace(/\n|\r/g, "");
+			source = regexpModule.exec(trace)[1];
+
+		} catch(error) {
+
+			try {
+
+				source = regexp.exec(trace)[1];
+
+			} catch(error) {
+
+				source = null;
+			};
+		};
+
+		if (source) {
+			
+			source = source.replace(/^.*[\\\/]/, '').replace(/[{()}]/g, '').replace(/\n|\r/g, "");
+
+		} else {
+
+			source = 'Row not found!';
+		};
 
 		return ' ' + source;
 	};
